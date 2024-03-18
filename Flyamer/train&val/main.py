@@ -65,25 +65,24 @@ def main():
     key_size, query_size, value_size = 2660, 2660, 2660
     Con_layer = [2, 2, 2, 2]
     random.seed(2023)
-    # testseed_list = random.sample(range(1, 999999), 50)
-    testseed_list = random.sample(range(1, 999999), 4)
+    testseed_list = random.sample(range(1, 999999), 50)
 
 
-    zuhes = {1: ['nbcp3_with0', 'sbcp', 'nsicp2', 'ssicp'],
-             }
+
+    zuhes = {1: ['NBCP', 'SBCP', 'PSDCP', 'SSDCP']}
     for zuhe in zuhes.values():
         # 读取特征集
         f1 = zuhe[0]
-        f1_path = "../Flymer_features/%s.npy" % f1
+        f1_path = "../Flyamer_features/%s.npy" % f1
         f1_Data = np.load(f1_path, allow_pickle=True).item()  # 返回的长度为细胞数量
         f2 = zuhe[1]
-        f2_path = "../Flymer_features/%s.npy" % f2
+        f2_path = "../Flyamer_features/%s.npy" % f2
         f2_Data = np.load(f2_path, allow_pickle=True).item()  # 返回的长度为细胞数量
         f3 = zuhe[2]
-        f3_path = "../Flymer_features/%s.npy" % f3
+        f3_path = "../Flyamer_features/%s.npy" % f3
         f3_Data = np.load(f3_path, allow_pickle=True).item()  # 返回的长度为细胞数量
         f4 = zuhe[3]
-        f4_path = "../Flymer_features/%s.npy" % f4
+        f4_path = "../Flyamer_features/%s.npy" % f4
         f4_Data = np.load(f4_path, allow_pickle=True).item()  # 返回的长度为细胞数量
 
         file = './train&val_result/train&val_result.xlsx'
@@ -114,36 +113,21 @@ def main():
         worksheet1.write(0, 21, 'val_micro_Recall')
         worksheet1.write(0, 22, 'val_macro_Recall')
         worksheet1.write(0, 23, 'val_bacc')
-        # for num_hiddens in [2660]:
-        #     norm_shape = [num_features, num_hiddens]
-        #     ffn_num_input = num_hiddens
-        #     for ffn_num_hiddens in [int(ffn_num_input * 0.5), int(ffn_num_input * 1), int(ffn_num_input * 2)]:
-        #         for num_heads in [20]:
-        #             for num_layers in [1, 2, 3, 4]:
-        #                 for dp in [0.1, 0.3, 0.5]:
-        #                     for use_bias in [False, True]:
-        #                         for kernel_size in [5, 7, 10, 15]:
-        #                             for out_channels in [32, 64]:
-        #                                 for out_feature in [int(num_hiddens/10), int(num_hiddens/5), int(num_hiddens/2)]:
-        #                                     for linear_layer in [1, 2, 3]:
-        #                                         for lr in [0.1, 0.001, 0.0001, 0.00001]:
-        #                                             for gamma in [1,2,3,4,5]:
-        #                                                 for batch_size in [8, 16, 32, 64]:
         for num_hiddens in [2660]:
             norm_shape = [num_features, num_hiddens]
             ffn_num_input = num_hiddens
-            for ffn_num_hiddens in [ int(ffn_num_input * 1)]:
+            for ffn_num_hiddens in [int(ffn_num_input * 0.5), int(ffn_num_input * 1), int(ffn_num_input * 2)]:
                 for num_heads in [20]:
-                    for num_layers in [2]:
-                        for dp in [0.1]:
-                            for use_bias in [False]:
-                                for kernel_size in [7]:
-                                    for out_channels in [64]:
-                                        for out_feature in [ int(num_hiddens/2)]:
-                                            for linear_layer in [1]:
-                                                for lr in [0.001, 0.0001]:
-                                                    for gamma in [1,2]:
-                                                        for batch_size in [32, 64]:
+                    for num_layers in [1, 2, 3, 4]:
+                        for dp in [0.1, 0.3, 0.5]:
+                            for use_bias in [False, True]:
+                                for kernel_size in [5, 7, 10, 15]:
+                                    for out_channels in [32, 64]:
+                                        for out_feature in [int(num_hiddens/10), int(num_hiddens/5), int(num_hiddens/2)]:
+                                            for linear_layer in [1, 2, 3]:
+                                                for lr in [0.1, 0.001, 0.0001, 0.00001]:
+                                                    for gamma in [1,2,3,4,5]:
+                                                        for batch_size in [8, 16, 32, 64]:
                                                             row += 1
                                                             sum_val_accuracy_zong = 0
                                                             sum_val_micro_F1_zong = 0

@@ -73,21 +73,21 @@ def main():
     random.seed(2023)
     testseed_list = random.sample(range(1, 999999), 50)
 
-    zuhes = {1: ['nbcp3_with0', 'sbcp', 'nsicp2', 'ssicp'],
+    zuhes = {1: ['NBCP', 'SBCP', 'PSDCP', 'SSDCP']
              }
     for zuhe in zuhes.values():
         # 读取特征集
         f1 = zuhe[0]
-        f1_path = "../4DN_features/zuhe1/%s.npy" % f1
+        f1_path = "../4DN_features/%s.npy" % f1
         f1_Data = np.load(f1_path, allow_pickle=True).item()  # 返回的长度为细胞数量
         f2 = zuhe[1]
-        f2_path = "../4DN_features/zuhe1/%s.npy" % f2
+        f2_path = "../4DN_features/%s.npy" % f2
         f2_Data = np.load(f2_path, allow_pickle=True).item()  # 返回的长度为细胞数量
         f3 = zuhe[2]
-        f3_path = "../4DN_features/zuhe1/%s.npy" % f3
+        f3_path = "../4DN_features/%s.npy" % f3
         f3_Data = np.load(f3_path, allow_pickle=True).item()  # 返回的长度为细胞数量
         f4 = zuhe[3]
-        f4_path = "../4DN_features/zuhe1/%s.npy" % f4
+        f4_path = "../4DN_features/%s.npy" % f4
         f4_Data = np.load(f4_path, allow_pickle=True).item()  # 返回的长度为细胞数量
 
         file = './train&val_result/train&val_result.xlsx'

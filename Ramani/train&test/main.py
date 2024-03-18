@@ -75,8 +75,8 @@ def main():
                      3778, 5900, 602, 5294, 4937, 1496, 6104, 6659, 1186, 4178]
 
 
-    zuhes = {1: ['nbcp3_with0', 'sbcp', 'nsicp2', 'ssicp'],
-             }
+    zuhes = {1: ['NBCP', 'SBCP', 'PSDCP', 'SSDCP'] }
+
     for zuhe in zuhes.values():
         # 读取特征集
         f1 = zuhe[0]

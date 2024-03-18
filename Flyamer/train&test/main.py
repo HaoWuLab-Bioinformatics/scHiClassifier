@@ -66,31 +66,30 @@ def main():
     Con_layer = [2, 2, 2, 2]
     # for testseed in [10, 541, 800, 1654, 8666]:
     random.seed(2023)
-    # testseed_list = [735715, 884807, 640905, 598764, 978791, 353617,
-    #                  664118, 104908, 822596, 129898, 682656, 318109,
-    #                  730637, 557627, 753260, 553225, 315788, 186666,
-    #                  243967, 668572, 17889, 380684, 132226, 739264,
-    #                  890591, 209523, 162059, 503280, 557513, 527263,
-    #                  68755, 79616, 831588, 600368, 777091, 645281, 668028,
-    #                  755110, 111881, 609102, 72548, 147381, 558246, 221929,
-    #                  304937, 857099, 751662, 603207, 781213, 392217]
-    testseed_list = [735715, 884807]
+    testseed_list = [735715, 884807, 640905, 598764, 978791, 353617,
+                     664118, 104908, 822596, 129898, 682656, 318109,
+                     730637, 557627, 753260, 553225, 315788, 186666,
+                     243967, 668572, 17889, 380684, 132226, 739264,
+                     890591, 209523, 162059, 503280, 557513, 527263,
+                     68755, 79616, 831588, 600368, 777091, 645281, 668028,
+                     755110, 111881, 609102, 72548, 147381, 558246, 221929,
+                     304937, 857099, 751662, 603207, 781213, 392217]
 
-    zuhes = {1: ['nbcp3_with0', 'sbcp', 'nsicp2', 'ssicp'],
-             }
+
+    zuhes = {1: ['NBCP', 'SBCP', 'PSDCP', 'SSDCP'] }
     for zuhe in zuhes.values():
         # 读取特征集
         f1 = zuhe[0]
-        f1_path = "../Flymer_features/%s.npy" % f1
+        f1_path = "../Flyamer_features/%s.npy" % f1
         f1_Data = np.load(f1_path, allow_pickle=True).item()  # 返回的长度为细胞数量
         f2 = zuhe[1]
-        f2_path = "../Flymer_features/%s.npy" % f2
+        f2_path = "../Flyamer_features/%s.npy" % f2
         f2_Data = np.load(f2_path, allow_pickle=True).item()  # 返回的长度为细胞数量
         f3 = zuhe[2]
-        f3_path = "../Flymer_features/%s.npy" % f3
+        f3_path = "../Flyamer_features/%s.npy" % f3
         f3_Data = np.load(f3_path, allow_pickle=True).item()  # 返回的长度为细胞数量
         f4 = zuhe[3]
-        f4_path = "../Flymer_features/%s.npy" % f4
+        f4_path = "../Flyamer_features/%s.npy" % f4
         f4_Data = np.load(f4_path, allow_pickle=True).item()  # 返回的长度为细胞数量
 
         for epoch in [150]:

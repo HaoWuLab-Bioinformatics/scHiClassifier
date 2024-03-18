@@ -186,86 +186,42 @@ class montage_model(nn.Module):
         self.encoder = TransformerEncoder(key_size, query_size, value_size, num_hiddens, norm_shape, ffn_num_input, ffn_num_hiddens, num_heads, num_layers, dp, use_bias)
         self.linear_layer = linear_layer
         # 因为Transformer输出的最后一维的维度就是num_hiddens
-        linear_size_SICP_init = num_hiddens
-        linear_size_BCP_init = num_hiddens
-        linear_size_SSICP_init = num_hiddens
+        linear_size_NBCP_init = num_hiddens
         linear_size_SBCP_init = num_hiddens
-        self.Con_layer_SICP, self.Con_layer_BCP, self.Con_layer_SSICP, self.Con_layer_SBCP = Con_layer
-        linear_size_SICP = com_linearsize(linear_size_SICP_init, self.Con_layer_SICP, kernel_size)
-        linear_size_BCP = com_linearsize(linear_size_BCP_init, self.Con_layer_BCP, kernel_size)
-        linear_size_SSICP = com_linearsize(linear_size_SSICP_init, self.Con_layer_SSICP, kernel_size)
+        linear_size_PSDCP_init = num_hiddens
+        linear_size_SSDCP_init = num_hiddens
+        self.Con_layer_NBCP, self.Con_layer_SBCP, self.Con_layer_PSDCP, self.Con_layer_SSDCP = Con_layer
+        linear_size_NBCP = com_linearsize(linear_size_NBCP_init, self.Con_layer_NBCP, kernel_size)
         linear_size_SBCP = com_linearsize(linear_size_SBCP_init, self.Con_layer_SBCP, kernel_size)
-        self.linear_size_SICP = linear_size_SICP
-        self.linear_size_BCP = linear_size_BCP
-        self.linear_size_SSICP = linear_size_SSICP
+        linear_size_PSDCP = com_linearsize(linear_size_PSDCP_init, self.Con_layer_PSDCP, kernel_size)
+        linear_size_SSDCP = com_linearsize(linear_size_SSDCP_init, self.Con_layer_SSDCP, kernel_size)
+        self.linear_size_NBCP = linear_size_NBCP
         self.linear_size_SBCP = linear_size_SBCP
+        self.linear_size_PSDCP = linear_size_PSDCP
+        self.linear_size_SSDCP = linear_size_SSDCP
         self.out_channels = out_channels
-        if self.Con_layer_SICP != 0:
-            self.conv1_SICP = nn.Conv1d(
+        if self.Con_layer_NBCP != 0:
+            self.conv1_NBCP = nn.Conv1d(
                 in_channels=1,
                 out_channels=out_channels,
                 kernel_size=kernel_size,
                 stride=1,
                 padding=1
             )
-            self.bn1_SICP = nn.BatchNorm1d(num_features=out_channels)
-            self.rule1_SICP = nn.ReLU()
-            self.pool_SICP = nn.MaxPool1d(kernel_size=2)
-            self.dropout_SICP = nn.Dropout(dp)
-            self.Con_SICP = nn.Sequential()
-            for i in range(self.Con_layer_SICP - 1):
+            self.bn1_NBCP = nn.BatchNorm1d(num_features=out_channels)
+            self.rule1_NBCP = nn.ReLU()
+            self.pool_NBCP = nn.MaxPool1d(kernel_size=2)
+            self.dropout_NBCP = nn.Dropout(dp)
+            self.Con_NBCP = nn.Sequential()
+            for i in range(self.Con_layer_NBCP - 1):
                 layer_id = str(i + 2)
-                self.Con_SICP.add_module("conv%s" % layer_id,
+                self.Con_NBCP.add_module("conv%s" % layer_id,
                                         nn.Conv1d(in_channels=out_channels, out_channels=out_channels,
                                                   kernel_size=kernel_size, stride=1, padding=1))
-                self.Con_SICP.add_module("bach%s" % layer_id, nn.BatchNorm1d(num_features=out_channels))
-                self.Con_SICP.add_module("relu%s" % layer_id, nn.ReLU())
-                self.Con_SICP.add_module("maxp%s" % layer_id, nn.MaxPool1d(kernel_size=2))
-                self.Con_SICP.add_module("drop%s" % layer_id, nn.Dropout(dp))
-        if self.Con_layer_BCP != 0:
-            self.conv1_BCP = nn.Conv1d(
-                in_channels=1,
-                out_channels=out_channels,
-                kernel_size=kernel_size,
-                stride=1,
-                padding=1
-            )
-            self.bn1_BCP = nn.BatchNorm1d(num_features=out_channels)
-            self.rule1_BCP = nn.ReLU()
-            self.pool_BCP = nn.MaxPool1d(kernel_size=2)
-            self.dropout_BCP = nn.Dropout(dp)
-            self.Con_BCP = nn.Sequential()
-            for i in range(self.Con_layer_BCP - 1):
-                layer_id = str(i + 2)
-                self.Con_BCP.add_module("conv%s" % layer_id,
-                                        nn.Conv1d(in_channels=out_channels, out_channels=out_channels,
-                                                  kernel_size=kernel_size, stride=1, padding=1))
-                self.Con_BCP.add_module("bach%s" % layer_id, nn.BatchNorm1d(num_features=out_channels))
-                self.Con_BCP.add_module("relu%s" % layer_id, nn.ReLU())
-                self.Con_BCP.add_module("maxp%s" % layer_id, nn.MaxPool1d(kernel_size=2))
-                self.Con_BCP.add_module("drop%s" % layer_id, nn.Dropout(dp))
-        if self.Con_layer_SSICP != 0:
-            self.conv1_SSICP = nn.Conv1d(
-                in_channels=1,
-                out_channels=out_channels,
-                kernel_size=kernel_size,
-                stride=1,
-                padding=1
-            )
-            self.bn1_SSICP = nn.BatchNorm1d(num_features=out_channels)
-            self.rule1_SSICP = nn.ReLU()
-            self.pool_SSICP = nn.MaxPool1d(kernel_size=2)
-            self.dropout_SSICP = nn.Dropout(dp)
-            self.Con_SSICP = nn.Sequential()
-            for i in range(self.Con_layer_SSICP - 1):
-                layer_id = str(i + 2)
-                self.Con_SSICP.add_module("conv%s" % layer_id,
-                                        nn.Conv1d(in_channels=out_channels, out_channels=out_channels,
-                                                  kernel_size=kernel_size, stride=1, padding=1))
-                self.Con_SSICP.add_module("bach%s" % layer_id, nn.BatchNorm1d(num_features=out_channels))
-                self.Con_SSICP.add_module("relu%s" % layer_id, nn.ReLU())
-                self.Con_SSICP.add_module("maxp%s" % layer_id, nn.MaxPool1d(kernel_size=2))
-                self.Con_SSICP.add_module("drop%s" % layer_id, nn.Dropout(dp))
+                self.Con_NBCP.add_module("bach%s" % layer_id, nn.BatchNorm1d(num_features=out_channels))
+                self.Con_NBCP.add_module("relu%s" % layer_id, nn.ReLU())
+                self.Con_NBCP.add_module("maxp%s" % layer_id, nn.MaxPool1d(kernel_size=2))
+                self.Con_NBCP.add_module("drop%s" % layer_id, nn.Dropout(dp))
         if self.Con_layer_SBCP != 0:
             self.conv1_SBCP = nn.Conv1d(
                 in_channels=1,
@@ -288,11 +244,55 @@ class montage_model(nn.Module):
                 self.Con_SBCP.add_module("relu%s" % layer_id, nn.ReLU())
                 self.Con_SBCP.add_module("maxp%s" % layer_id, nn.MaxPool1d(kernel_size=2))
                 self.Con_SBCP.add_module("drop%s" % layer_id, nn.Dropout(dp))
+        if self.Con_layer_PSDCP != 0:
+            self.conv1_PSDCP = nn.Conv1d(
+                in_channels=1,
+                out_channels=out_channels,
+                kernel_size=kernel_size,
+                stride=1,
+                padding=1
+            )
+            self.bn1_PSDCP = nn.BatchNorm1d(num_features=out_channels)
+            self.rule1_PSDCP = nn.ReLU()
+            self.pool_PSDCP = nn.MaxPool1d(kernel_size=2)
+            self.dropout_PSDCP = nn.Dropout(dp)
+            self.Con_PSDCP = nn.Sequential()
+            for i in range(self.Con_layer_PSDCP - 1):
+                layer_id = str(i + 2)
+                self.Con_PSDCP.add_module("conv%s" % layer_id,
+                                        nn.Conv1d(in_channels=out_channels, out_channels=out_channels,
+                                                  kernel_size=kernel_size, stride=1, padding=1))
+                self.Con_PSDCP.add_module("bach%s" % layer_id, nn.BatchNorm1d(num_features=out_channels))
+                self.Con_PSDCP.add_module("relu%s" % layer_id, nn.ReLU())
+                self.Con_PSDCP.add_module("maxp%s" % layer_id, nn.MaxPool1d(kernel_size=2))
+                self.Con_PSDCP.add_module("drop%s" % layer_id, nn.Dropout(dp))
+        if self.Con_layer_SSDCP != 0:
+            self.conv1_SSDCP = nn.Conv1d(
+                in_channels=1,
+                out_channels=out_channels,
+                kernel_size=kernel_size,
+                stride=1,
+                padding=1
+            )
+            self.bn1_SSDCP = nn.BatchNorm1d(num_features=out_channels)
+            self.rule1_SSDCP = nn.ReLU()
+            self.pool_SSDCP = nn.MaxPool1d(kernel_size=2)
+            self.dropout_SSDCP = nn.Dropout(dp)
+            self.Con_SSDCP = nn.Sequential()
+            for i in range(self.Con_layer_SSDCP - 1):
+                layer_id = str(i + 2)
+                self.Con_SSDCP.add_module("conv%s" % layer_id,
+                                        nn.Conv1d(in_channels=out_channels, out_channels=out_channels,
+                                                  kernel_size=kernel_size, stride=1, padding=1))
+                self.Con_SSDCP.add_module("bach%s" % layer_id, nn.BatchNorm1d(num_features=out_channels))
+                self.Con_SSDCP.add_module("relu%s" % layer_id, nn.ReLU())
+                self.Con_SSDCP.add_module("maxp%s" % layer_id, nn.MaxPool1d(kernel_size=2))
+                self.Con_SSDCP.add_module("drop%s" % layer_id, nn.Dropout(dp))
 
         if linear_layer == 1:
-            self.fc = nn.Linear(in_features=out_channels * (linear_size_SICP+linear_size_BCP+linear_size_SSICP+linear_size_SBCP), out_features=num_types)
+            self.fc = nn.Linear(in_features=out_channels * (linear_size_NBCP+linear_size_SBCP+linear_size_PSDCP+linear_size_SSDCP), out_features=num_types)
         else:
-            self.fc1 = nn.Linear(in_features=out_channels * (linear_size_SICP+linear_size_BCP+linear_size_SSICP+linear_size_SBCP), out_features=out_feature)
+            self.fc1 = nn.Linear(in_features=out_channels * (linear_size_NBCP+linear_size_SBCP+linear_size_PSDCP+linear_size_SSDCP), out_features=out_feature)
             self.relu2 = nn.ReLU()
             self.dropout = nn.Dropout(dp)
             self.linear = nn.Sequential()
@@ -315,61 +315,34 @@ class montage_model(nn.Module):
         x2 = X[:, 1:2, :]
         x3 = X[:, 2:3, :]
         x4 = X[:, 3:4, :]
-        if self.Con_layer_SICP != 0:
-            x1 = self.rule1_SICP(self.bn1_SICP(self.conv1_SICP(x1)))
-            x1 = self.pool_SICP(x1)
-            x1 = self.dropout_SICP(x1)
-            x1 = self.Con_SICP(x1)
-            x1 = x1.view(-1, self.out_channels * self.linear_size_SICP)
-        if self.Con_layer_BCP != 0:
-            x2 = self.rule1_BCP(self.bn1_BCP(self.conv1_BCP(x2)))
-            x2 = self.pool_BCP(x2)
-            x2 = self.dropout_BCP(x2)
-            x2 = self.Con_BCP(x2)
-            x2 = x2.view(-1, self.out_channels * self.linear_size_BCP)
-        if self.Con_layer_SSICP != 0:
-            x3 = self.rule1_SSICP(self.bn1_SSICP(self.conv1_SSICP(x3)))
-            x3 = self.pool_SSICP(x3)
-            x3 = self.dropout_SSICP(x3)
-            x3 = self.Con_SSICP(x3)
-            x3 = x3.view(-1, self.out_channels * self.linear_size_SSICP)
+        if self.Con_layer_NBCP != 0:
+            x1 = self.rule1_NBCP(self.bn1_NBCP(self.conv1_NBCP(x1)))
+            x1 = self.pool_NBCP(x1)
+            x1 = self.dropout_NBCP(x1)
+            x1 = self.Con_NBCP(x1)
+            x1 = x1.view(-1, self.out_channels * self.linear_size_NBCP)
         if self.Con_layer_SBCP != 0:
-            x4 = self.rule1_SBCP(self.bn1_SBCP(self.conv1_SBCP(x4)))
-            x4 = self.pool_SBCP(x4)
-            x4 = self.dropout_SBCP(x4)
-            x4 = self.Con_SBCP(x4)
-            x4 = x4.view(-1, self.out_channels * self.linear_size_SBCP)
+            x2 = self.rule1_SBCP(self.bn1_SBCP(self.conv1_SBCP(x2)))
+            x2 = self.pool_SBCP(x2)
+            x2 = self.dropout_SBCP(x2)
+            x2 = self.Con_SBCP(x2)
+            x2 = x2.view(-1, self.out_channels * self.linear_size_SBCP)
+        if self.Con_layer_PSDCP != 0:
+            x3 = self.rule1_PSDCP(self.bn1_PSDCP(self.conv1_PSDCP(x3)))
+            x3 = self.pool_PSDCP(x3)
+            x3 = self.dropout_PSDCP(x3)
+            x3 = self.Con_PSDCP(x3)
+            x3 = x3.view(-1, self.out_channels * self.linear_size_PSDCP)
+        if self.Con_layer_SSDCP != 0:
+            x4 = self.rule1_SSDCP(self.bn1_SSDCP(self.conv1_SSDCP(x4)))
+            x4 = self.pool_SSDCP(x4)
+            x4 = self.dropout_SSDCP(x4)
+            x4 = self.Con_SSDCP(x4)
+            x4 = x4.view(-1, self.out_channels * self.linear_size_SSDCP)
 
-        if self.Con_layer_SICP != 0 and self.Con_layer_BCP != 0 and self.Con_layer_SSICP != 0 and self.Con_layer_SBCP != 0:
+        if self.Con_layer_NBCP != 0 and self.Con_layer_SBCP != 0 and self.Con_layer_PSDCP != 0 and self.Con_layer_SSDCP != 0:
             x = torch.cat((x1, x2, x3, x4), 1)
-        elif self.Con_layer_SICP == 0 and self.Con_layer_BCP != 0 and self.Con_layer_SSICP != 0 and self.Con_layer_SBCP != 0:
-            x = torch.cat((x2, x3, x4), 1)
-        elif self.Con_layer_SICP != 0 and self.Con_layer_BCP == 0 and self.Con_layer_SSICP != 0 and self.Con_layer_SBCP != 0:
-            x = torch.cat((x1, x3, x4), 1)
-        elif self.Con_layer_SICP != 0 and self.Con_layer_BCP != 0 and self.Con_layer_SSICP == 0 and self.Con_layer_SBCP != 0:
-            x = torch.cat((x1, x2, x4), 1)
-        elif self.Con_layer_SICP != 0 and self.Con_layer_BCP != 0 and self.Con_layer_SSICP != 0 and self.Con_layer_SBCP == 0:
-            x = torch.cat((x1, x2, x3), 1)
-        elif self.Con_layer_SICP == 0 and self.Con_layer_BCP == 0 and self.Con_layer_SSICP != 0 and self.Con_layer_SBCP != 0:
-            x = torch.cat((x3, x4), 1)
-        elif self.Con_layer_SICP == 0 and self.Con_layer_BCP != 0 and self.Con_layer_SSICP == 0 and self.Con_layer_SBCP != 0:
-            x = torch.cat((x2, x4), 1)
-        elif self.Con_layer_SICP == 0 and self.Con_layer_BCP != 0 and self.Con_layer_SSICP != 0 and self.Con_layer_SBCP == 0:
-            x = torch.cat((x2, x3), 1)
-        elif self.Con_layer_SICP != 0 and self.Con_layer_BCP == 0 and self.Con_layer_SSICP == 0 and self.Con_layer_SBCP != 0:
-            x = torch.cat((x1, x4), 1)
-        elif self.Con_layer_SICP != 0 and self.Con_layer_BCP == 0 and self.Con_layer_SSICP != 0 and self.Con_layer_SBCP == 0:
-            x = torch.cat((x1, x3), 1)
-        elif self.Con_layer_SICP != 0 and self.Con_layer_BCP != 0 and self.Con_layer_SSICP == 0 and self.Con_layer_SBCP == 0:
-            x = torch.cat((x1, x2), 1)
-        elif self.Con_layer_SICP != 0 and self.Con_layer_BCP == 0 and self.Con_layer_SSICP == 0 and self.Con_layer_SBCP == 0:
-            x = torch.cat((x1), 1)
-        elif self.Con_layer_SICP == 0 and self.Con_layer_BCP != 0 and self.Con_layer_SSICP == 0 and self.Con_layer_SBCP == 0:
-            x = torch.cat((x2), 1)
-        elif self.Con_layer_SICP == 0 and self.Con_layer_BCP == 0 and self.Con_layer_SSICP != 0 and self.Con_layer_SBCP == 0:
-            x = torch.cat((x3), 1)
-        elif self.Con_layer_SICP == 0 and self.Con_layer_BCP == 0 and self.Con_layer_SSICP == 0 and self.Con_layer_SBCP != 0:
-            x = torch.cat((x4), 1)
+
         if self.linear_layer == 1:
             x = self.fc(x)
         else:# Decay:492  Inscore:489

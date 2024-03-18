@@ -68,10 +68,10 @@ def main():
     Con_layer = [2, 2, 2, 2]
     # for testseed in [10, 541, 800, 1654, 8666]:
     random.seed(2023)
-    testseed_list = random.sample(range(1, 999999), 2)
+    testseed_list = random.sample(range(1, 999999), 50)
 
-    zuhes = {1: ['nbcp3_with0', 'sbcp', 'nsicp2', 'ssicp'],
-             }
+    zuhes = {1: ['NBCP', 'SBCP', 'PSDCP', 'SSDCP'] }
+
     for zuhe in zuhes.values():
         # 读取特征集
         f1 = zuhe[0]
@@ -118,32 +118,19 @@ def main():
         for num_hiddens in [2660]:
             norm_shape = [num_features, num_hiddens]
             ffn_num_input = num_hiddens
-            # for ffn_num_hiddens in [int(ffn_num_input * 0.5), int(ffn_num_input * 1), int(ffn_num_input * 2)]:
-            #     for num_heads in [20]:
-            #         for num_layers in [1, 2, 3, 4]:
-            #             for dp in [0.1, 0.3, 0.5]:
-            #                 for use_bias in [False, True]:
-            #                     for kernel_size in [5, 7, 10, 15]:
-            #                         for out_channels in [32, 64]:
-            #                             for out_feature in [int(num_hiddens / 10), int(num_hiddens / 5),
-            #                                                 int(num_hiddens / 2)]:
-            #                                 for linear_layer in [1, 2, 3]:
-            #                                     for lr in [0.1, 0.001, 0.0001, 0.00001]:
-            #                                         for gamma in [1, 2, 3, 4, 5]:
-            #                                             for batch_size in [8, 16, 32, 64]:
-            for ffn_num_hiddens in [int(ffn_num_input * 1)]:
+            for ffn_num_hiddens in [int(ffn_num_input * 0.5), int(ffn_num_input * 1), int(ffn_num_input * 2)]:
                 for num_heads in [20]:
-                    for num_layers in [1]:
-                        for dp in [0.1]:
-                            for use_bias in [False]:
-                                for kernel_size in [7]:
+                    for num_layers in [1, 2, 3, 4]:
+                        for dp in [0.1, 0.3, 0.5]:
+                            for use_bias in [False, True]:
+                                for kernel_size in [5, 7, 10, 15]:
                                     for out_channels in [32, 64]:
-                                        for out_feature in [
+                                        for out_feature in [int(num_hiddens / 10), int(num_hiddens / 5),
                                                             int(num_hiddens / 2)]:
-                                            for linear_layer in [1]:
-                                                for lr in [0.00001]:
-                                                    for gamma in [1]:
-                                                        for batch_size in [32]:
+                                            for linear_layer in [1, 2, 3]:
+                                                for lr in [0.1, 0.001, 0.0001, 0.00001]:
+                                                    for gamma in [1, 2, 3, 4, 5]:
+                                                        for batch_size in [8, 16, 32, 64]:
                                                             row += 1
                                                             sum_val_accuracy_zong = 0
                                                             sum_val_micro_F1_zong = 0
@@ -243,14 +230,14 @@ def main():
                                                             worksheet1.write(row, 13, gamma)
                                                             worksheet1.write(row, 14, lr)
                                                             worksheet1.write(row, 15, batch_size)
-                                                            worksheet1.write(row, 16, sum_val_accuracy_zong / 2)
-                                                            worksheet1.write(row, 17, sum_val_micro_F1_zong / 2)
-                                                            worksheet1.write(row, 18, sum_val_macro_F1_zong / 2)
-                                                            worksheet1.write(row, 19, sum_val_micro_Precision_zong / 2)
-                                                            worksheet1.write(row, 20, sum_val_macro_Precision_zong / 2)
-                                                            worksheet1.write(row, 21, sum_val_micro_Recall_zong / 2)
-                                                            worksheet1.write(row, 22, sum_val_macro_Recall_zong / 2)
-                                                            worksheet1.write(row, 23, sum_val_bacc_zong / 2)
+                                                            worksheet1.write(row, 16, sum_val_accuracy_zong / 50)
+                                                            worksheet1.write(row, 17, sum_val_micro_F1_zong / 50)
+                                                            worksheet1.write(row, 18, sum_val_macro_F1_zong / 50)
+                                                            worksheet1.write(row, 19, sum_val_micro_Precision_zong / 50)
+                                                            worksheet1.write(row, 20, sum_val_macro_Precision_zong / 50)
+                                                            worksheet1.write(row, 21, sum_val_micro_Recall_zong / 50)
+                                                            worksheet1.write(row, 22, sum_val_macro_Recall_zong / 50)
+                                                            worksheet1.write(row, 23, sum_val_bacc_zong / 50)
         workbook.close()
 
 if __name__ == '__main__':

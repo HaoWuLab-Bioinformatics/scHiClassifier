@@ -71,8 +71,7 @@ def main():
     random.seed(2023)
     testseed_list = random.sample(range(1, 999999), 50)
 
-    zuhes = {1: ['nbcp3_with0', 'sbcp', 'nsicp2', 'ssicp'],
-             }
+    zuhes = {1: ['NBCP', 'SBCP', 'PSDCP', 'SSDCP'] }
     for zuhe in zuhes.values():
         # 读取特征集
         f1 = zuhe[0]

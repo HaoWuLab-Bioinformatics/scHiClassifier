@@ -77,21 +77,21 @@ def main():
                      653430, 132226, 739264, 890591, 820294, 40803, 209523, 162059, 503280,
                      944383, 468642, 357992, 527263, 68755, 79616, 563898, 483552, 522696,
                      831588, 128350, 600368, 248121, 777091, 645281]
-    zuhes = {1: ['nbcp3_with0', 'sbcp', 'nsicp2', 'ssicp'],
-             }
+    zuhes = {1: ['NBCP', 'SBCP', 'PSDCP', 'SSDCP'] }
+
     for zuhe in zuhes.values():
         # 读取特征集
         f1 = zuhe[0]
-        f1_path = "../Collombet_features/zuhe1/%s.npy" % f1
+        f1_path = "../Collombet_features/%s.npy" % f1
         f1_Data = np.load(f1_path, allow_pickle=True).item()  # 返回的长度为细胞数量
         f2 = zuhe[1]
-        f2_path = "../Collombet_features/zuhe1/%s.npy" % f2
+        f2_path = "../Collombet_features/%s.npy" % f2
         f2_Data = np.load(f2_path, allow_pickle=True).item()  # 返回的长度为细胞数量
         f3 = zuhe[2]
-        f3_path = "../Collombet_features/zuhe1/%s.npy" % f3
+        f3_path = "../Collombet_features/%s.npy" % f3
         f3_Data = np.load(f3_path, allow_pickle=True).item()  # 返回的长度为细胞数量
         f4 = zuhe[3]
-        f4_path = "../Collombet_features/zuhe1/%s.npy" % f4
+        f4_path = "../Collombet_features/%s.npy" % f4
         f4_Data = np.load(f4_path, allow_pickle=True).item()  # 返回的长度为细胞数量
 
         file = './train&test_result/train&test_result.xlsx'
