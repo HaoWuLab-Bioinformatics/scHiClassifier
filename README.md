@@ -21,6 +21,6 @@ torch  1.13.0
 torchvision 0.14.0  
 sklearn  
 numpy   
-See requirements.txt for all detailed libraries.  
-Other developers can use the following command to install the dependencies contained in requirements.txt:
+See "**requirements.txt"** for all detailed libraries.  
+Other developers can use the following command to install the dependencies contained in "**requirements.txt"**:
 `pip install -r requirements.txt`  
