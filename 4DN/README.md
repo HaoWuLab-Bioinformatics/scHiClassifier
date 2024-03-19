@@ -1,5 +1,5 @@
 ## Overview
-The folder "**4DN_Data**" contains the raw data 
+The folder "**4DN_Data**" contains the raw data 来自
 The folder "**4DN_features**" contains the data of the enhancer and promoter, containing the sequences of the independent test sets and training sets. The first half of each file is labeled as 0, and the second half is labeled as 1.  
 The folder "**Feature_extraction**" contains the data of the enhancer created by Liu et al.[1], containing the sequences of the independent test sets and training sets.   
 The folder "**train&test**" contains the trained models on eight cell lines and the pre-trained models are trained on all cell lines for use or validation.  
