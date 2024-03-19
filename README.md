@@ -6,12 +6,13 @@ A Deep Learning Framework for Cell Type Prediction Fusing of Multi-angle Feature
 ## The architecture of the fusion prediction model.
 ![image](Figure/Figure2.jpg)
 ## Overview
-The folder "4DN" contains the data and code details for the 4DN dataset.  
-The folder "Collombet" contains the data and code details for the Collombet dataset.  
-The folder "Flyamer" contains the data and code details for the Flyamer dataset.  
-The folder "Lee" contains the data and code details for the Lee dataset.  
-The folder "Nagano" contains the data and code details for the Nagano dataset.  
-The folder "Ramani" contains the data and code details for the Ramani dataset.  
+The folder "**Figure**" contains the framework figure of scHiClassifier and the architecture figure of the fusion prediction model.
+The folder "**4DN**" contains the data and code details for the 4DN dataset.  
+The folder "**Collombet**" contains the data and code details for the Collombet dataset.  
+The folder "**Flyamer**" contains the data and code details for the Flyamer dataset.  
+The folder "**Lee**" contains the data and code details for the Lee dataset.  
+The folder "**Nagano**" contains the data and code details for the Nagano dataset.  
+The folder "**Ramani**" contains the data and code details for the Ramani dataset.  
 
 ## Dependency
 Mainly used libraries:  
