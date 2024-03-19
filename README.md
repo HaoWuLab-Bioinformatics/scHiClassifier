@@ -3,10 +3,8 @@ A Deep Learning Framework for Cell Type Prediction Fusing of Multi-angle Feature
 
 ## The framework of scHiClassifier
 ![image](Figure/Figure1.jpg)
-
 ## The architecture of the fusion prediction model.
 ![image](Figure/Figure2.jpg)
-
 ## Overview
 The folder "4DN" contains the data and code details for the 4DN dataset.  
 The folder "Collombet" contains the data and code details for the Collombet dataset.  
