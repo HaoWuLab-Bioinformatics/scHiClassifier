@@ -1,8 +1,11 @@
 # scHiClassifier
 A Deep Learning Framework for Cell Type Prediction Fusing of Multi-angle Feature Sets from Single-cell Hi-C Data  
 
-## Framework
-![image](https://github.com/HaoWuLab-Bioinformatics/iPro-WAEL/blob/main/Figure/Figure1.png)
+## The framework of scHiClassifier
+![image](https://github.com/HaoWuLab-Bioinformatics/scHiClassifier/Figure/Figure1.jpg)
+
+## The architecture of the fusion prediction model.
+![image](https://github.com/HaoWuLab-Bioinformatics/scHiClassifier/Figure/Figure2.jpg)
 
 ## Overview
 The folder "4DN" contains the data and code details for the 4DN dataset.  
