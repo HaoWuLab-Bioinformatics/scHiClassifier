@@ -14,6 +14,9 @@ The folder "**Lee**" contains the data and code details for the Lee dataset.
 The folder "**Nagano**" contains the data and code details for the Nagano dataset.  
 The folder "**Ramani**" contains the data and code details for the Ramani dataset.  
 
+## Tools
+It is recommended to deploy and run this project using PyCharm
+
 ## Dependency
 Mainly used libraries:  
 Python 3.9.15 
