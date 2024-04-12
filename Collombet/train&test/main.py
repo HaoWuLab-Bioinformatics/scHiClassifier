@@ -20,8 +20,8 @@ def seed_torch(seed=2022):
 
 def main():
     types = {'1CSE': 85, '2CSE': 114, '4CSE': 121, '64CSE': 205, '8CSE': 123}
-    # alpha用于计算focal_loss
-    # 每个类别对应的alpha=该类别出现频率的倒数
+    # alpha is used to calculate focal_loss
+    # alpha for each category = inverse of the frequency of occurrence of that category
     alpha = []
     for value in types.values():
         ds = 1 / value
@@ -32,20 +32,16 @@ def main():
     X = []
     resolution = 1000000
     tps = sorted(types)
-    # print(tps) ['1CSE', '2CSE', '4CSE', '64CSE', '8CSE']
     f = open('../mm10.main.nochrM.chrom.sizes')
     index = {}
     lines = f.readlines()
     for line in lines:
         chr_name, length = line.split()
-        # max_len+1是指一个长度为length的染色体在resolution分辨率下能分成max_len+1块
-        # 为什么要+1？因为int(10/3)=3，是向下取整的，多出来的那一截，也要做一块。
         max_len = int(int(length) / resolution)
-        # index字典中index[chr_name]存的是染色体chr_name在分别率为resolution时能分出的块数
+        # index[chr_name] stores the number of bins that the chromosome with the number chr_name can be divided into when the resolution is resolution
         index[chr_name] = max_len + 1
-        # f.seek(0)用于将光标移到开头
+        # Why +1, because the division will round down, and the extra piece, too, will make a bin.
     f.seek(0)
-    # 关闭文件流
     f.close()
     cell_number = 0
     for type in tps:
@@ -69,7 +65,6 @@ def main():
     num_types = 5
     key_size, query_size, value_size = 2660, 2660, 2660
     Con_layer = [2, 2, 2, 2]
-    # for testseed in [10, 541, 800, 1654, 8666]:
     random.seed(2023)
     testseed_list = [401523, 735715, 468261, 884807, 408141, 335839, 640905, 598764,
                      978791, 664118, 822596, 129898, 682656, 318109, 879136, 557627, 753260,
@@ -80,19 +75,19 @@ def main():
     zuhes = {1: ['NBCP', 'SBCP', 'PSDCP', 'SSDCP'] }
 
     for zuhe in zuhes.values():
-        # 读取特征集
+        # Read the feature sets
         f1 = zuhe[0]
         f1_path = "../Collombet_features/%s.npy" % f1
-        f1_Data = np.load(f1_path, allow_pickle=True).item()  # 返回的长度为细胞数量
+        f1_Data = np.load(f1_path, allow_pickle=True).item()  # The length returned is the number of cells
         f2 = zuhe[1]
         f2_path = "../Collombet_features/%s.npy" % f2
-        f2_Data = np.load(f2_path, allow_pickle=True).item()  # 返回的长度为细胞数量
+        f2_Data = np.load(f2_path, allow_pickle=True).item()  # The length returned is the number of cells
         f3 = zuhe[2]
         f3_path = "../Collombet_features/%s.npy" % f3
-        f3_Data = np.load(f3_path, allow_pickle=True).item()  # 返回的长度为细胞数量
+        f3_Data = np.load(f3_path, allow_pickle=True).item()  # The length returned is the number of cells
         f4 = zuhe[3]
         f4_path = "../Collombet_features/%s.npy" % f4
-        f4_Data = np.load(f4_path, allow_pickle=True).item()  # 返回的长度为细胞数量
+        f4_Data = np.load(f4_path, allow_pickle=True).item()  # The length returned is the number of cells
 
         file = './train&test_result/train&test_result.xlsx'
         workbook = xlsxwriter.Workbook(file)
