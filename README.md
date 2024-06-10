@@ -2,7 +2,7 @@
 A Deep Learning Framework for Cell Type Prediction Fusing of Multi-angle Feature Sets from Single-cell Hi-C Data  
 
 ## The framework of scHiClassifier
-![image](Figure/Figure1.jpg)
+![image](Figure/Figure_1.jpg)
 ## The architecture of the fusion prediction model.
 ![image](Figure/Figure2.jpg)
 ## Overview
