@@ -15,7 +15,7 @@ The folder "**Nagano**" contains the data and code details for the Nagano datase
 The folder "**Ramani**" contains the data and code details for the Ramani dataset.  
 
 ## Tools
-It is recommended to deploy and run this project using PyCharm. We have also built an executable compute capsule for our code on the cloud-based platform Code Ocean, accessible at https://codeocean.com/capsule/2365852/tree.
+It is recommended to deploy and run this project using PyCharm. We have also built an executable compute capsule for our code on the cloud-based platform Code Ocean, accessible at https://codeocean.com/capsule/2365852/tree. Due to circumstances on our end and the codeocean website, we are currently unable to adjust this instance to a public state, meaning it cannot be accessed by all accounts. Therefore, we suggest that when you visit "https://codeocean.com/capsule/2365852/tree", please log in using "202215269@mail.sdu.edu.cn" as the username and "captain@0827" as the password. After a successful login, you can run our deployed instance by clicking the "Reproducible Run" button at the top right corner of the page.
 
 ## Dependency
 Mainly used libraries:  
