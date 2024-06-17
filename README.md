@@ -2,9 +2,9 @@
 A Deep Learning Framework for Cell Type Prediction Fusing of Multi-angle Feature Sets from Single-cell Hi-C Data  
 
 ## The framework of scHiClassifier
-![image](Figure/Figure_1.jpg)
+![image](Figure_1.jpg)
 ## The architecture of the fusion prediction model.
-![image](Figure/Figure2.jpg)
+![image](Figure_2.jpg)
 ## Overview
 The folder "**Figure**" contains the framework figure of scHiClassifier and the architecture figure of the fusion prediction model.  
 The folder "**4DN**" contains the data and code details for the 4DN dataset.  
